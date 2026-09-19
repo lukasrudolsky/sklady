@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Areál - pronájem skladů a hal | Letňany</title>
+<meta name="description" content="Pronájem skladových a výrobních prostor v Praze - Letňanech. Interaktivní mapa areálu, online rezervace prohlídky, aktuální dostupnost jednotek.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="page" style="width: 100%; max-width: 1280px; margin: 0 auto; box-sizing: border-box; display: flex; flex-direction: column; background: #F5F9FB; color: #0F2A33;">
+
+<header style="height: 80px; flex-shrink: 0; box-sizing: border-box; padding: 0 80px; display: flex; align-items: center; gap: 40px; background: #FFFFFF; border-bottom: 1px solid #E3EBEF;">
+<a href="#prostory" style="display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit;">
+<span aria-hidden="true" style="width: 34px; height: 34px; flex-shrink: 0; border-radius: 10px; background: {{accent}}; display: flex; align-items: center; justify-content: center;" data-b="0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#062B36" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21V10.5l9-4.5 9 4.5V21"/><path d="M2 21h20"/><path d="M9 21v-6.5h6V21"/><path d="M9 17.5h6"/></svg></span>
+<span style="display: flex; flex-direction: column; gap: 1px; flex-shrink: 0;"><span style="font-family: 'Geist', system-ui, sans-serif; font-size: 19px; line-height: 1.1; font-weight: 700; letter-spacing: -0.01em;">Areál</span><span style="font-size: 10px; line-height: 1.1; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; color: #54707E;">Sklady a haly</span></span>
+</a>
+<nav style="display: flex; align-items: center; gap: 26px; flex-grow: 1;">
+<a class="nav-a is-on" href="#prostory" style="position: relative; white-space: nowrap; font-size: 15px; font-weight: 600; color: #0F2A33; text-decoration: none;">Prostory</a><a class="nav-a" href="#poptavka" style="position: relative; white-space: nowrap; font-size: 15px; font-weight: 600; color: #54707E; text-decoration: none;">Prohlídky</a><a class="nav-a" href="#vybaveni" style="position: relative; white-space: nowrap; font-size: 15px; font-weight: 600; color: #54707E; text-decoration: none;">Vybavení</a><a class="nav-a" href="#lokalita" style="position: relative; white-space: nowrap; font-size: 15px; font-weight: 600; color: #54707E; text-decoration: none;">Lokalita</a><a class="nav-a" href="#faq" style="position: relative; white-space: nowrap; font-size: 15px; font-weight: 600; color: #54707E; text-decoration: none;">Časté dotazy</a>
+</nav>
+<div style="display: flex; align-items: center; gap: 12px; flex-shrink: 0;">
+<a class="btn-ghost" href="tel:+420725111222" style="box-sizing: border-box; display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 12px; border: 1px solid #E3EBEF; background: #FFFFFF; color: #0F2A33; text-decoration: none;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#07789A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18.5h2"/></svg><span style="white-space: nowrap; font-size: 14px; font-weight: 600;">+420 725 111 222</span></a>
+<a class="btn-dark" href="#poptavka" style="padding: 12px 22px; border-radius: 12px; background: #0F2A33; color: #FFFFFF; font-size: 14px; font-weight: 700; white-space: nowrap; text-decoration: none;">Rezervovat prohlídku</a>
+</div>
+<button type="button" id="navToggle" class="nav-toggle" aria-label="Otevřít menu" aria-expanded="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0F2A33" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M3 12h18"/><path d="M3 18h18"/></svg></button>
+</header>
+
+<div id="mobileMenu" class="mobile-menu">
+<a class="mobile-menu-link" href="#prostory">Prostory</a>
+<a class="mobile-menu-link" href="#poptavka">Rezervace prohlídky</a>
+<a class="mobile-menu-link" href="#vybaveni">Vybavení</a>
+<a class="mobile-menu-link" href="#lokalita">Lokalita</a>
+<a class="mobile-menu-link" href="#faq">Časté dotazy</a>
+<a class="mobile-menu-phone" href="tel:+420725111222"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#07789A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18.5h2"/></svg>+420 725 111 222</a>
+<a class="mobile-menu-cta" href="#poptavka">Rezervovat prohlídku</a>
+</div>
+
+<section id="prostory" style="height: 800px; flex-shrink: 0; box-sizing: border-box; padding: 48px 80px 0; display: flex; gap: 40px;" class="hero-row">
+
+<div class="map-stage-wrap" style="position: relative; width: 100%; max-width: 740px; aspect-ratio: 740 / 690; border-radius: 24px; overflow: hidden; background: #E9EFF2; box-shadow: 0 18px 44px rgba(15, 42, 51, 0.13); margin: 0 auto; flex-shrink: 0;">
+<div class="map-stage-inner" style="position: relative; width: 740px; height: 690px; transform-origin: top left;" data-b="1">
+<div class="cam {{flyCls}}" style="position: absolute; left: 0; top: 0; width: 740px; height: 690px; transform: scale({{zoomS}}) translate({{zoomTX}}px, {{zoomTY}}px); transform-origin: {{zoomX}}px {{zoomY}}px; pointer-events: {{mapPe}}; transition: transform 1250ms cubic-bezier(0.62, 0, 0.2, 1);" data-b="2">
+<img src="assets/aerial-base.jpg" alt="Letecký pohled na areál" style="position: absolute; left: 0; top: 0; width: 740px; height: 690px; display: block;">
+<div aria-hidden="true" style="position: absolute; left: 0; top: 0; width: 740px; height: 690px; pointer-events: none; background: #0A2029; opacity: {{veil}}; transition: opacity 700ms cubic-bezier(0.4, 0.02, 0.18, 1);" data-b="3"></div>
+<img src="assets/aerial-color.jpg" alt="" style="position: absolute; left: 0; top: 0; width: 740px; height: 690px; clip-path: polygon(159px 433px, 304px 406px, 444px 455px, 534px 465px, 574px 493px, 624px 553px, 664px 673px, 274px 683px, 189px 643px, 149px 543px); opacity: {{op.yard}}; transition: opacity 420ms cubic-bezier(0.22, 1, 0.36, 1);" data-b="4">
+<svg viewBox="0 0 740 690" aria-hidden="true" style="position: absolute; left: 0; top: 0; width: 740px; height: 690px; pointer-events: none; opacity: {{op.yard}}; transition: opacity 300ms cubic-bezier(0.22, 1, 0.36, 1);" data-b="5"><polygon class="ants" points="159,433 304,406 444,455 534,465 574,493 624,553 664,673 274,683 189,643 149,543" fill="none" stroke="#ffffff" stroke-linejoin="round" stroke-dasharray="14 9" style="stroke-width: {{sw.yard}}px; transition: stroke-width 560ms cubic-bezier(0.22, 1, 0.36, 1);" data-b="6"></polygon></svg>
+<img src="assets/aerial-color.jpg" alt="" style="position: absolute; left: 0; top: 0; width: 740px; height: 690px; clip-path: polygon(0px 436px, 88px 446px, 86px 552px, 40px 570px, 0px 575px); opacity: {{op.office}}; transition: opacity 420ms cubic-bezier(0.22, 1, 0.36, 1);" data-b="7">
+<svg viewBox="0 0 740 690" aria-hidden="true" style="position: absolute; left: 0; top: 0; width: 740px; height: 690px; pointer-events: none; opacity: {{op.office}}; transition: opacity 300ms cubic-bezier(0.22, 1, 0.36, 1);" data-b="8"><polygon class="ants" points="0,436 88,446 86,552 40,570 0,575" fill="none" stroke="#ffffff" stroke-linejoin="round" stroke-dasharray="14 9" style="stroke-width: {{sw.office}}px; transition: stroke-width 560ms cubic-bezier(0.22, 1, 0.36, 1);" data-b="9"></polygon></svg>
+<img src="assets/aerial-color.jpg" alt="" style="position: absolute; left: 0; top: 0; width: 740px; height: 690px; clip-path: polygon(18px 280px, 21px 356px, 28px 366px, 35px 366px, 106px 405px, 110px 410px, 140px 424px, 144px 429px, 149px 429px, 152px 436px, 174px 437px, 302px 402px, 322px 240px, 196px 248px, 97px 236px, 60px 270px); opacity: {{op.west}}; transition: opacity 420ms cubic-bezier(0.22, 1, 0.36, 1);" data-b="10">
+<svg viewBox="0 0 740 690" aria-hidden="true" style="position: absolute; left: 0; top: 0; width: 740px; height: 690px; pointer-events: none; opacity: {{op.west}}; transition: opacity 300ms cubic-bezier(0.22, 1, 0.36, 1);" data-b="11"><polygon class="ants" points="18,280 21,356 28,366 35,366 106,405 110,410 140,424 144,429 149,429 152,436 174,437 302,402 322,240 196,248 97,236 60,270" fill="none" stroke="#ffffff" stroke-linejoin="round" stroke-dasharray="14 9" style="stroke-width: {{sw.west}}px; transition: stroke-width 560ms cubic-bezier(0.22, 1, 0.36, 1);" data-b="12"></polygon></svg>
+<img src="assets/aerial-color.jpg" alt="" style="position: absolute; left: 0; top: 0; width: 740px; height: 690px; clip-path: polygon(322px 240px, 400px 246px, 480px 262px, 560px 283px, 608px 293px, 628px 318px, 620px 462px, 565px 493px, 557px 495px, 553px 480px, 547px 476px, 536px 476px, 532px 464px, 500px 466px, 469px 458px, 465px 453px, 438px 457px, 422px 448px, 413px 447px, 412px 444px, 390px 438px, 389px 435px, 382px 435px, 309px 404px, 302px 404px); opacity: {{op.hall}}; transition: opacity 420ms cubic-bezier(0.22, 1, 0.36, 1);" data-b="13">
+<svg viewBox="0 0 740 690" aria-hidden="true" style="position: absolute; left: 0; top: 0; width: 740px; height: 690px; pointer-events: none; opacity: {{op.hall}}; transition: opacity 300ms cubic-bezier(0.22, 1, 0.36, 1);" data-b="14"><polygon class="ants" points="322,240 400,246 480,262 560,283 608,293 628,318 620,462 565,493 557,495 553,480 547,476 536,476 532,464 500,466 469,458 465,453 438,457 422,448 413,447 412,444 390,438 389,435 382,435 309,404 302,404" fill="none" stroke="#ffffff" stroke-linejoin="round" stroke-dasharray="14 9" style="stroke-width: {{sw.hall}}px; transition: stroke-width 560ms cubic-bezier(0.22, 1, 0.36, 1);" data-b="15"></polygon></svg>
+<img src="assets/aerial-color.jpg" alt="" style="position: absolute; left: 0; top: 0; width: 740px; height: 690px; clip-path: polygon(626px 340px, 700px 326px, 740px 317px, 740px 518px, 648px 516px, 600px 498px, 596px 448px, 626px 440px); opacity: {{op.annex}}; transition: opacity 420ms cubic-bezier(0.22, 1, 0.36, 1);" data-b="16">
+<svg viewBox="0 0 740 690" aria-hidden="true" style="position: absolute; left: 0; top: 0; width: 740px; height: 690px; pointer-events: none; opacity: {{op.annex}}; transition: opacity 300ms cubic-bezier(0.22, 1, 0.36, 1);" data-b="17"><polygon class="ants" points="626,340 700,326 740,317 740,518 648,516 600,498 596,448 626,440" fill="none" stroke="#ffffff" stroke-linejoin="round" stroke-dasharray="14 9" style="stroke-width: {{sw.annex}}px; transition: stroke-width 560ms cubic-bezier(0.22, 1, 0.36, 1);" data-b="18"></polygon></svg>
+<button type="button" aria-label="Venkovní plocha"    style="position: absolute; left: 0; top: 0; width: 740px; height: 690px; clip-path: polygon(159px 433px, 304px 406px, 444px 455px, 534px 465px, 574px 493px, 624px 553px, 664px 673px, 274px 683px, 189px 643px, 149px 543px); background: transparent; border: 0; padding: 0; margin: 0; cursor: pointer;" data-b="19"></button>
+<button type="button" aria-label="Kancelář"    style="position: absolute; left: 0; top: 0; width: 740px; height: 690px; clip-path: polygon(0px 436px, 88px 446px, 86px 552px, 40px 570px, 0px 575px); background: transparent; border: 0; padding: 0; margin: 0; cursor: pointer;" data-b="20"></button>
+<button type="button" aria-label="Hala A"    style="position: absolute; left: 0; top: 0; width: 740px; height: 690px; clip-path: polygon(18px 280px, 21px 356px, 28px 366px, 35px 366px, 106px 405px, 110px 410px, 140px 424px, 144px 429px, 149px 429px, 152px 436px, 174px 437px, 302px 402px, 322px 240px, 196px 248px, 97px 236px, 60px 270px); background: transparent; border: 0; padding: 0; margin: 0; cursor: pointer;" data-b="21"></button>
+<button type="button" aria-label="Sklad"    style="position: absolute; left: 0; top: 0; width: 740px; height: 690px; clip-path: polygon(322px 240px, 400px 246px, 480px 262px, 560px 283px, 608px 293px, 628px 318px, 620px 462px, 565px 493px, 557px 495px, 553px 480px, 547px 476px, 536px 476px, 532px 464px, 500px 466px, 469px 458px, 465px 453px, 438px 457px, 422px 448px, 413px 447px, 412px 444px, 390px 438px, 389px 435px, 382px 435px, 309px 404px, 302px 404px); background: transparent; border: 0; padding: 0; margin: 0; cursor: pointer;" data-b="22"></button>
+<button type="button" aria-label="Přístavba"    style="position: absolute; left: 0; top: 0; width: 740px; height: 690px; clip-path: polygon(626px 340px, 700px 326px, 740px 317px, 740px 518px, 648px 516px, 600px 498px, 596px 448px, 626px 440px); background: transparent; border: 0; padding: 0; margin: 0; cursor: pointer;" data-b="23"></button>
+<span aria-hidden="true" style="position: absolute; left: 384px; top: 559px; width: 0; height: 0;">
+<span class="{{halo.yard}}" style="position: absolute; left: -21px; top: -21px; width: 42px; height: 42px; border-radius: 50%; border: 2px solid {{accent}}; opacity: 0;" data-b="24"></span>
+<span style="position: absolute; left: -9px; top: -9px; width: 18px; height: 18px; border-radius: 50%; box-sizing: border-box; border: 3px solid #ffffff; background: {{pin.yard}}; box-shadow: 0 2px 6px rgba(9, 38, 48, 0.45); transition: background 380ms cubic-bezier(0.22, 1, 0.36, 1), transform 380ms cubic-bezier(0.34, 1.4, 0.64, 1); transform: scale({{pinS.yard}});" data-b="25"></span>
+</span>
+<span aria-hidden="true" style="position: absolute; left: 42px; top: 504px; width: 0; height: 0;">
+<span class="{{halo.office}}" style="position: absolute; left: -21px; top: -21px; width: 42px; height: 42px; border-radius: 50%; border: 2px solid {{accent}}; opacity: 0;" data-b="26"></span>
+<span style="position: absolute; left: -9px; top: -9px; width: 18px; height: 18px; border-radius: 50%; box-sizing: border-box; border: 3px solid #ffffff; background: {{pin.office}}; box-shadow: 0 2px 6px rgba(9, 38, 48, 0.45); transition: background 380ms cubic-bezier(0.22, 1, 0.36, 1), transform 380ms cubic-bezier(0.34, 1.4, 0.64, 1); transform: scale({{pinS.office}});" data-b="27"></span>
+</span>
+<span aria-hidden="true" style="position: absolute; left: 176px; top: 329px; width: 0; height: 0;">
+<span class="{{halo.west}}" style="position: absolute; left: -21px; top: -21px; width: 42px; height: 42px; border-radius: 50%; border: 2px solid {{accent}}; opacity: 0;" data-b="28"></span>
+<span style="position: absolute; left: -9px; top: -9px; width: 18px; height: 18px; border-radius: 50%; box-sizing: border-box; border: 3px solid #ffffff; background: {{pin.west}}; box-shadow: 0 2px 6px rgba(9, 38, 48, 0.45); transition: background 380ms cubic-bezier(0.22, 1, 0.36, 1), transform 380ms cubic-bezier(0.34, 1.4, 0.64, 1); transform: scale({{pinS.west}});" data-b="29"></span>
+</span>
+<span aria-hidden="true" style="position: absolute; left: 469px; top: 360px; width: 0; height: 0;">
+<span class="{{halo.hall}}" style="position: absolute; left: -21px; top: -21px; width: 42px; height: 42px; border-radius: 50%; border: 2px solid {{accent}}; opacity: 0;" data-b="30"></span>
+<span style="position: absolute; left: -9px; top: -9px; width: 18px; height: 18px; border-radius: 50%; box-sizing: border-box; border: 3px solid #ffffff; background: {{pin.hall}}; box-shadow: 0 2px 6px rgba(9, 38, 48, 0.45); transition: background 380ms cubic-bezier(0.22, 1, 0.36, 1), transform 380ms cubic-bezier(0.34, 1.4, 0.64, 1); transform: scale({{pinS.hall}});" data-b="31"></span>
+</span>
+<span aria-hidden="true" style="position: absolute; left: 679px; top: 426px; width: 0; height: 0;">
+<span class="{{halo.annex}}" style="position: absolute; left: -21px; top: -21px; width: 42px; height: 42px; border-radius: 50%; border: 2px solid {{accent}}; opacity: 0;" data-b="32"></span>
+<span style="position: absolute; left: -9px; top: -9px; width: 18px; height: 18px; border-radius: 50%; box-sizing: border-box; border: 3px solid #ffffff; background: {{pin.annex}}; box-shadow: 0 2px 6px rgba(9, 38, 48, 0.45); transition: background 380ms cubic-bezier(0.22, 1, 0.36, 1), transform 380ms cubic-bezier(0.34, 1.4, 0.64, 1); transform: scale({{pinS.annex}});" data-b="33"></span>
+</span>
+</div>
+<div class="badge" style="position: absolute; left: 481px; top: 44px; width: 190px; height: 190px; border-radius: 50%; background: radial-gradient(circle at 32% 26%, color-mix(in srgb, {{accent}} 100%, #FFFFFF 32%), {{accent}} 62%); border: 3px solid rgba(255, 255, 255, 0.55); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; text-align: center; pointer-events: none; box-shadow: 0 16px 34px rgba(7, 120, 154, 0.4), inset 0 -10px 20px rgba(6, 43, 54, 0.1); opacity: {{chromeOp}}; transition: opacity 240ms ease; animation: {{badgeAnim}} 380ms cubic-bezier(0.34, 1.4, 0.64, 1);" data-b="34">
+<div style="font-size: 11px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: rgba(6, 43, 54, 0.68);" data-b="35"></div>
+<div style="display: flex; align-items: baseline; gap: 4px; color: #062B36;">
+<span style="font-family: 'Geist', system-ui, sans-serif; font-size: 38px; font-weight: 700; line-height: 1; letter-spacing: -0.01em;" data-b="36"></span>
+<span style="font-size: 17px; font-weight: 700;">Kč</span>
+</div>
+<span aria-hidden="true" style="width: 22px; height: 2px; border-radius: 2px; background: rgba(6, 43, 54, 0.22);"></span>
+<div style="font-size: 13px; font-weight: 600; color: rgba(6, 64, 79, 0.75);">měsíčně</div>
+</div>
+<div aria-hidden="true" style="position: absolute; left: 24px; bottom: 24px; display: flex; align-items: center; gap: 8px; padding: 12px 16px; border-radius: 999px; background: rgba(9, 32, 41, 0.82); opacity: {{hintOp}}; transition: opacity 420ms cubic-bezier(0.22, 1, 0.36, 1); pointer-events: none;" data-b="37">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3.5 18 11l-5.4 1.7L10 19z"></path></svg>
+<span style="font-size: 13px; font-weight: 600; color: #FFFFFF;">Najeďte na plochu a vyberte prostor</span>
+</div>
+<button class="btn-dark" type="button"    style="position: absolute; right: 24px; bottom: 24px; display: flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 999px; border: 0; background: #0F2A33; color: #FFFFFF; font-family: 'Geist', system-ui, sans-serif; font-size: 14px; font-weight: 700; cursor: pointer; opacity: {{chromeOp}}; pointer-events: {{chromePe}}; box-shadow: 0 8px 22px rgba(9, 38, 48, 0.4); transition: opacity 240ms ease, background 180ms ease;" data-b="38">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9.3h18"/><path d="M3 14.6h18"/></svg>
+<span>Podívat se dovnitř</span>
+<span style="padding: 2px 8px; border-radius: 999px; background: rgba(255, 255, 255, 0.16); font-size: 13px; font-weight: 700; white-space: nowrap;" data-b="39"></span>
+</button>
+
+<div class="cam-in" aria-hidden="{{insideHidden}}" style="position: absolute; left: 0; top: 0; width: 740px; height: 690px; opacity: {{inOp}}; transform: translateY({{inShiftY}}px) scale({{inScale}}); filter: blur({{inBlur}}px); pointer-events: {{inPe}}; transition: opacity 520ms cubic-bezier(0.34, 0, 0.16, 1) {{inDelay}}, transform 980ms cubic-bezier(0.34, 0, 0.16, 1) {{inDelay}}, filter 680ms cubic-bezier(0.34, 0, 0.16, 1) {{inDelay}};" data-b="40">
+
+<svg viewBox="0 0 740 690" style="position: absolute; left: 0; top: 0; width: 740px; height: 690px; display: block; opacity: {{scene.schemaOp}}; transition: opacity 300ms ease;" aria-hidden="true" data-b="41">
+<defs>
+<linearGradient id="ceil" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0B2B35"></stop><stop offset="1" stop-color="#16424F"></stop></linearGradient>
+<linearGradient id="flr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1B4E5B"></stop><stop offset="1" stop-color="#0E3543"></stop></linearGradient>
+<radialGradient id="pool" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#CFEFF6" stop-opacity="0.32"></stop><stop offset="1" stop-color="#CFEFF6" stop-opacity="0"></stop></radialGradient>
+<linearGradient id="win" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#D6F0F7" stop-opacity="0.62"></stop><stop offset="1" stop-color="#D6F0F7" stop-opacity="0.18"></stop></linearGradient>
+</defs>
+<rect x="0" y="0" width="740" height="690" fill="#0E3542"></rect>
+<polygon points="0,0 740,0 500,230 240,230" fill="url(#ceil)"></polygon>
+<polygon points="0,690 740,690 500,430 240,430" fill="#174957"></polygon>
+<polygon points="0,0 240,230 240,430 0,690" fill="#0C303C"></polygon>
+<polygon points="740,0 500,230 500,430 740,690" fill="#103A47"></polygon>
+<rect x="240" y="230" width="260" height="200" fill="#0A2932"></rect>
+<polygon points="0,124 240,266 240,290 0,207" fill="url(#win)"></polygon>
+<polygon points="740,124 500,266 500,290 740,207" fill="url(#win)"></polygon>
+<line x1="60" y1="57.5" x2="60" y2="625" stroke="#08222B" stroke-width="3" opacity="0.55"></line>
+<line x1="120" y1="115" x2="120" y2="560" stroke="#08222B" stroke-width="2.4" opacity="0.5"></line>
+<line x1="180" y1="172.5" x2="180" y2="495" stroke="#08222B" stroke-width="2" opacity="0.45"></line>
+<line x1="680" y1="57.5" x2="680" y2="625" stroke="#08222B" stroke-width="3" opacity="0.55"></line>
+<line x1="620" y1="115" x2="620" y2="560" stroke="#08222B" stroke-width="2.4" opacity="0.5"></line>
+<line x1="560" y1="172.5" x2="560" y2="495" stroke="#08222B" stroke-width="2" opacity="0.45"></line>
+<line x1="60" y1="57.5" x2="680" y2="57.5" stroke="#08222B" stroke-width="3" opacity="0.5"></line>
+<line x1="120" y1="115" x2="620" y2="115" stroke="#08222B" stroke-width="2.4" opacity="0.45"></line>
+<line x1="180" y1="172.5" x2="560" y2="172.5" stroke="#08222B" stroke-width="2" opacity="0.4"></line>
+<line x1="60" y1="625" x2="680" y2="625" stroke="#0A2C36" stroke-width="2.4" opacity="0.5"></line>
+<line x1="120" y1="560" x2="620" y2="560" stroke="#0A2C36" stroke-width="2" opacity="0.45"></line>
+<line x1="180" y1="495" x2="560" y2="495" stroke="#0A2C36" stroke-width="1.7" opacity="0.4"></line>
+<ellipse cx="370" cy="530" rx="235" ry="82" fill="url(#pool)"></ellipse>
+</svg>
+
+<svg viewBox="0 0 740 690" style="position: absolute; left: 0; top: 0; width: 740px; height: 690px; display: block; opacity: {{scene.gateOp}}; transition: opacity 300ms ease;" aria-hidden="true" data-b="42">
+<rect x="298" y="298" width="144" height="132" fill="#123F4C"></rect>
+<rect x="298" y="298" width="144" height="132" fill="none" stroke="#071E26" stroke-width="3"></rect>
+<line x1="300" y1="320" x2="440" y2="320" stroke="#0A2E39" stroke-width="2"></line>
+<line x1="300" y1="342" x2="440" y2="342" stroke="#0A2E39" stroke-width="2"></line>
+<line x1="300" y1="364" x2="440" y2="364" stroke="#0A2E39" stroke-width="2"></line>
+<line x1="300" y1="386" x2="440" y2="386" stroke="#0A2E39" stroke-width="2"></line>
+<line x1="300" y1="408" x2="440" y2="408" stroke="#0A2E39" stroke-width="2"></line>
+<rect x="262" y="248" width="216" height="30" fill="#BCE4EE" opacity="0.4"></rect>
+</svg>
+
+<svg viewBox="0 0 740 690" style="position: absolute; left: 0; top: 0; width: 740px; height: 690px; display: block; opacity: {{scene.skyOp}}; transition: opacity 300ms ease;" aria-hidden="true" data-b="43">
+<defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E4EFF3"></stop><stop offset="1" stop-color="#B9D3DC"></stop></linearGradient></defs>
+<polygon points="0,0 740,0 500,230 240,230" fill="url(#sky)"></polygon>
+<rect x="240" y="230" width="260" height="34" fill="#9FBECA"></rect>
+</svg>
+
+<div tabindex="0" role="img" aria-label="Panoramatický rozhled ve skladu, od střechy po podlahu. Táhněte myší nebo použijte šipky na klávesnici."      style="position: absolute; left: 0; top: 0; width: 740px; height: 690px; overflow: hidden; opacity: {{scene.panoOp}}; pointer-events: {{panoPe}}; cursor: {{panCursor}}; touch-action: none; transition: opacity 300ms ease;" data-b="44">
+<div style="position: absolute; left: 0; top: 0; width: 740px; height: 690px; transform: translate3d({{panShift}}px, {{panShiftY}}px, 0); will-change: transform; backface-visibility: hidden;" data-b="45">
+<div class="pano-img pano-spin {{spinPause}}" style="position: absolute; left: -3100px; top: 0; width: 10500px; height: 1935px;" data-b="46"></div>
+</div>
+</div>
+<div aria-hidden="true" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 999px; background: rgba(6, 30, 38, 0.72); opacity: {{panoHintOp}}; pointer-events: none; transition: opacity 420ms ease;" data-b="47">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h18"/><path d="M7 8l-4 4 4 4"/><path d="M17 8l4 4-4 4"/></svg>
+<span style="font-size: 13px; font-weight: 600; color: #FFFFFF;">Táhněte a rozhlédněte se</span>
+</div>
+<div style="position: absolute; left: 24px; top: 24px; display: flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 999px; background: rgba(6, 30, 38, 0.72);">
+<span aria-hidden="true" style="display: flex; align-items: center; line-height: 0;"><span style="display: {{ico.warehouse}}; line-height: 0;" data-b="48"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="{{accent}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-b="49"><path d="M3 21V10.5l9-4.5 9 4.5V21"/><path d="M2 21h20"/><path d="M9 21v-6.5h6V21"/><path d="M9 17.5h6"/></svg></span><span style="display: {{ico.yard}}; line-height: 0;" data-b="50"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="{{accent}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-b="51"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9.5 17V8h3a2.5 2.5 0 0 1 0 5h-3"/></svg></span><span style="display: {{ico.office}}; line-height: 0;" data-b="52"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="{{accent}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-b="53"><rect x="3" y="4" width="18" height="11.5" rx="2"/><path d="M12 15.5V20"/><path d="M8 20h8"/></svg></span></span>
+<span style="font-size: 13px; font-weight: 600; color: #FFFFFF;" data-b="54"></span>
+</div>
+
+<button class="btn-ghost" type="button"  style="position: absolute; right: 24px; top: 24px; display: flex; align-items: center; gap: 8px; padding: 12px 16px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, 0.28); background: rgba(6, 30, 38, 0.72); color: #FFFFFF; font-family: 'Geist', system-ui, sans-serif; font-size: 13px; font-weight: 700; cursor: pointer;" data-b="55">
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12H4"/><path d="M10 6l-6 6 6 6"/></svg>
+Zpět na mapu
+</button>
+
+<div class="{{slideCls}}" style="position: absolute; left: 24px; right: 24px; bottom: 24px; padding: 16px 20px; border-radius: 20px; background: rgba(6, 26, 33, 0.92); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); display: flex; align-items: center; gap: 20px;" data-b="56">
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; flex-grow: 1; min-width: 0;">
+<div style="display: flex; flex-direction: column; gap: 4px;">
+<span style="font-size: 10px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: #8FB0BD; white-space: nowrap;">Plocha</span>
+<span style="font-size: 15px; font-weight: 700; color: #FFFFFF; white-space: nowrap;" data-b="57"></span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 4px;">
+<span style="font-size: 10px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: #8FB0BD; white-space: nowrap;">Světlá výška</span>
+<span style="font-size: 15px; font-weight: 700; color: #FFFFFF; white-space: nowrap;" data-b="58"></span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 4px;">
+<span style="font-size: 10px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: #8FB0BD; white-space: nowrap;">Vjezd</span>
+<span style="font-size: 15px; font-weight: 700; color: #FFFFFF; white-space: nowrap;" data-b="59"></span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 4px;">
+<span style="font-size: 10px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: #8FB0BD; white-space: nowrap;">Podlaha</span>
+<span style="font-size: 15px; font-weight: 700; color: #FFFFFF; white-space: nowrap;" data-b="60"></span>
+</div>
+</div>
+<a class="btn-acc" href="#poptavka" style="flex-shrink: 0; padding: 12px 20px; border-radius: 12px; background: {{accent}}; color: #062B36; font-size: 14px; font-weight: 700; text-decoration: none; white-space: nowrap;" data-b="61">Rezervovat prohlídku</a>
+</div>
+
+</div>
+
+</div>
+</div>
+
+<div style="width: 340px; flex-shrink: 0; height: 690px; display: flex; flex-direction: column; justify-content: space-between;">
+<div style="display: flex; flex-direction: column; gap: 12px;">
+<div style="display: flex; flex-direction: column; gap: 8px;">
+<div style="font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #07789A;">Průmyslový areál · Praha 9 – Letňany</div>
+<h1 style="margin: 0; font-family: 'Geist', system-ui, sans-serif; font-size: 36px; line-height: 1.08; font-weight: 700; letter-spacing: -0.02em;">Haly a sklady k pronájmu</h1>
+</div>
+<p style="margin: 0; font-size: 14px; line-height: 1.55; font-weight: 500; color: #54707E;">Pět jednotek od 42 do 450 m². Vyberte prostor kliknutím v mapě nebo v seznamu, rovnou k němu zarezervujete prohlídku.</p>
+</div>
+
+<div  style="display: flex; flex-direction: column; gap: 8px;" data-b="62">
+<div style="display: flex; align-items: center; gap: 8px; padding-bottom: 2px;">
+<span style="flex-grow: 1; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: {{listLabelFg}}; white-space: nowrap;" data-b="63"></span>
+<button type="button"  aria-label="Zrušit vícenásobný výběr" style="display: {{resetShow}}; align-items: center; padding: 8px 8px; border-radius: 8px; border: 1px solid #DDE7EC; background: #FFFFFF; color: #54707E; font-family: 'Geist', system-ui, sans-serif; font-size: 11px; font-weight: 700; cursor: pointer;" data-b="64">Zrušit</button>
+<button type="button" aria-pressed="{{modeTotalOn}}"  style="padding: 8px 12px; border-radius: 8px; border: 1px solid {{modeTotalBc}}; background: {{modeTotalBg}}; color: {{modeTotalFg}}; font-family: 'Geist', system-ui, sans-serif; font-size: 11px; font-weight: 700; cursor: pointer; transition: background 180ms ease, border-color 180ms ease;" data-b="65">Kč/měsíc</button>
+<button type="button" aria-pressed="{{modePerOn}}"  style="padding: 8px 12px; border-radius: 8px; border: 1px solid {{modePerBc}}; background: {{modePerBg}}; color: {{modePerFg}}; font-family: 'Geist', system-ui, sans-serif; font-size: 11px; font-weight: 700; cursor: pointer; transition: background 180ms ease, border-color 180ms ease;" data-b="66">Kč/m²</button>
+</div>
+<span style="font-size: 11px; font-weight: 500; color: #8FB0BD;">Ceny jsou bez DPH a bez energií</span>
+<div data-list="rows" id="list-rows"></div>
+</div>
+
+<a class="btn-acc" href="#poptavka" style="box-sizing: border-box; width: 100%; padding: 12px 20px; border-radius: 12px; background: #07789A; color: #FFFFFF; text-decoration: none; display: flex; flex-direction: column; align-items: center; gap: 2px;"><span style="font-size: 15px; font-weight: 700;">Rezervovat prohlídku</span><span style="font-size: 12px; font-weight: 600; color: #BFE6F2; white-space: nowrap;" data-b="67"></span></a>
+</div>
+</section>
+
+<section id="stats" style="height: 140px; flex-shrink: 0; box-sizing: border-box; padding: 0 80px; display: flex; align-items: center;">
+<div style="width: 100%; box-sizing: border-box; border-radius: 20px; background: #FFFFFF; border: 1px solid #E3EBEF; box-shadow: 0 14px 34px rgba(15, 42, 51, 0.07); overflow: hidden; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));" class="stats-grid">
+<div style="box-sizing: border-box; padding: 20px 24px; display: flex; align-items: center; gap: 16px;"><div style="width: 40px; height: 40px; flex-shrink: 0; border-radius: 12px; background: #EAF6FA; display: flex; align-items: center; justify-content: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#07789A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 12h18"/><path d="M12 12v9"/></svg></div><div style="display: flex; flex-direction: column; gap: 4px; min-width: 0;"><div style="display: flex; align-items: baseline; gap: 4px;"><span style="font-family: 'Geist', system-ui, sans-serif; font-size: 26px; line-height: 1.05; font-weight: 700; letter-spacing: -0.02em; color: #0F2A33;">887</span><span style="font-size: 15px; font-weight: 700; color: #07789A;">m²</span></div><span style="font-size: 12px; font-weight: 600; color: #54707E; white-space: nowrap;">pronajímatelná plocha</span></div></div>
+<div style="box-sizing: border-box; border-left: 1px solid #EDF3F6; padding: 20px 24px; display: flex; align-items: center; gap: 16px;"><div style="width: 40px; height: 40px; flex-shrink: 0; border-radius: 12px; background: #EAF6FA; display: flex; align-items: center; justify-content: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#07789A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg></div><div style="display: flex; flex-direction: column; gap: 4px; min-width: 0;"><div style="display: flex; align-items: baseline; gap: 4px;"><span style="font-family: 'Geist', system-ui, sans-serif; font-size: 26px; line-height: 1.05; font-weight: 700; letter-spacing: -0.02em; color: #0F2A33;">5</span></div><span style="font-size: 12px; font-weight: 600; color: #54707E; white-space: nowrap;">volných jednotek</span></div></div>
+<div style="box-sizing: border-box; border-left: 1px solid #EDF3F6; padding: 20px 24px; display: flex; align-items: center; gap: 16px;"><div style="width: 40px; height: 40px; flex-shrink: 0; border-radius: 12px; background: #EAF6FA; display: flex; align-items: center; justify-content: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#07789A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.6 2.6A2 2 0 0 0 11.2 2H4a2 2 0 0 0-2 2v7.2a2 2 0 0 0 .6 1.4l8.7 8.7a2 2 0 0 0 2.8 0l6.6-6.6a2 2 0 0 0 0-2.8z"/><circle cx="7.2" cy="7.2" r="1.4"/></svg></div><div style="display: flex; flex-direction: column; gap: 4px; min-width: 0;"><div style="display: flex; align-items: baseline; gap: 4px;"><span style="font-size: 13px; font-weight: 600; color: #54707E;">od</span><span style="font-family: 'Geist', system-ui, sans-serif; font-size: 26px; line-height: 1.05; font-weight: 700; letter-spacing: -0.02em; color: #0F2A33;">20</span><span style="font-size: 15px; font-weight: 700; color: #07789A;">Kč</span></div><span style="font-size: 12px; font-weight: 600; color: #54707E; white-space: nowrap;">za m² a měsíc</span></div></div>
+<div style="box-sizing: border-box; border-left: 1px solid #EDF3F6; padding: 20px 24px; display: flex; align-items: center; gap: 16px;"><div style="width: 40px; height: 40px; flex-shrink: 0; border-radius: 12px; background: #EAF6FA; display: flex; align-items: center; justify-content: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#07789A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><div style="display: flex; flex-direction: column; gap: 4px; min-width: 0;"><div style="display: flex; align-items: baseline; gap: 4px;"><span style="font-family: 'Geist', system-ui, sans-serif; font-size: 26px; line-height: 1.05; font-weight: 700; letter-spacing: -0.02em; color: #0F2A33;">Ihned</span></div><span style="font-size: 12px; font-weight: 600; color: #54707E; white-space: nowrap;">k nastěhování</span></div></div>
+</div>
+</section>
+
+<section id="poptavka" style="height: 720px; flex-shrink: 0; box-sizing: border-box; padding: 72px 80px 0; display: flex; flex-direction: column; gap: 24px;">
+<div style="display: flex; align-items: flex-end; gap: 40px;">
+<div style="display: flex; flex-direction: column; gap: 12px; flex-grow: 1;">
+<div style="font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #07789A;">Rezervace termínu</div>
+<h2 style="margin: 0; font-family: 'Geist', system-ui, sans-serif; font-size: 38px; line-height: 1.1; font-weight: 700; letter-spacing: -0.02em;">Vyberte si termín prohlídky</h2>
+</div>
+<p style="margin: 0 0 4px; width: 380px; flex-shrink: 0; font-size: 14px; line-height: 1.6; font-weight: 500; color: #54707E;">Volné sloty na nejbližší pracovní dny. Rezervace je nezávazná, termín potvrdíme e-mailem.</p>
+</div>
+
+<div style="display: flex; gap: 32px; padding: 28px; border-radius: 20px; background: #FFFFFF; border: 1px solid #E3EBEF; box-shadow: 0 14px 34px rgba(15, 42, 51, 0.07);" class="booking-row">
+
+<div style="width: 320px; flex-shrink: 0; display: flex; flex-direction: column; gap: 16px;">
+<div style="padding: 16px; border-radius: 16px; background: #0F2A33; display: flex; flex-direction: column; gap: 8px;">
+<span style="font-size: 11px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: #8FB0BD;">Prohlídka jednotky</span>
+<span style="font-family: 'Geist', system-ui, sans-serif; font-size: 26px; font-weight: 700; letter-spacing: -0.01em; color: #FFFFFF;" data-b="68"></span>
+<span style="font-size: 14px; font-weight: 500; color: #A9C2CC;" data-b="69"></span>
+<a href="#prostory" style="margin-top: 4px; font-size: 13px; font-weight: 600; color: {{accent}}; text-decoration: none;" data-b="70">Změnit jednotku v mapě →</a>
+</div>
+<div style="display: flex; flex-direction: column; border: 1px solid #DDE7EC; border-radius: 16px; overflow: hidden;">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 16px; background: #F5F9FB; border-bottom: 1px solid #E3EBEF;">
+<span style="font-size: 11px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: #54707E;">Parametry jednotky</span>
+<span style="font-size: 12px; font-weight: 700; color: #07789A; white-space: nowrap;" data-b="71"></span>
+</div>
+<div data-list="spec.rows" id="list-spec_rows"></div>
+</div>
+</div>
+
+<div data-if="notBooked" id="if-notBooked" style="display:none"></div>
+
+<div data-if="booked" id="if-booked" style="display:none"></div>
+
+</div>
+</section>
+
+<section id="vybaveni" style="height: 560px; flex-shrink: 0; box-sizing: border-box; padding: 72px 80px 0; display: flex; flex-direction: column; gap: 32px; background: #FFFFFF; border-top: 1px solid #E3EBEF; border-bottom: 1px solid #E3EBEF;">
+<div style="display: flex; align-items: flex-end; gap: 40px;">
+<div style="display: flex; flex-direction: column; gap: 12px; flex-grow: 1;">
+<div style="font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #07789A;">Vybavení</div>
+<h2 style="margin: 0; font-family: 'Geist', system-ui, sans-serif; font-size: 38px; line-height: 1.1; font-weight: 700; letter-spacing: -0.02em;">Co k prostorám patří</h2>
+</div>
+<p style="margin: 0 0 4px; width: 380px; flex-shrink: 0; font-size: 14px; line-height: 1.6; font-weight: 500; color: #54707E;">Standard, který je v ceně nájmu u každé jednotky. Bez příplatků a bez výjimek podle velikosti.</p>
+</div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px;" class="grid-3">
+<div class="card-hov" style="padding: 24px; border-radius: 16px; background: #F5F9FB; border: 1px solid #E3EBEF; display: flex; flex-direction: column; gap: 12px;">
+<div style="display: flex; align-items: center; gap: 12px;"><span aria-hidden="true" style="width: 40px; height: 40px; flex-shrink: 0; border-radius: 12px; background: #E7F5FA; display: flex; align-items: center; justify-content: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#07789A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 18V7a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h1.5"/><path d="M8.5 18h6"/><path d="M19 18h2a1 1 0 0 0 1-1v-3a1 1 0 0 0-.3-.7l-2.5-2.6a1 1 0 0 0-.7-.3H13"/><circle cx="6.5" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg></span><span style="font-size: 17px; font-weight: 600;">Příjezd pro kamiony</span></div>
+<span style="font-size: 14px; line-height: 1.6; font-weight: 500; color: #54707E;">Zpevněný dvůr s dostatečným poloměrem pro otáčení návěsů a dvěma vjezdy do areálu.</span>
+</div>
+<div class="card-hov" style="padding: 24px; border-radius: 16px; background: #F5F9FB; border: 1px solid #E3EBEF; display: flex; flex-direction: column; gap: 12px;">
+<div style="display: flex; align-items: center; gap: 12px;"><span aria-hidden="true" style="width: 40px; height: 40px; flex-shrink: 0; border-radius: 12px; background: #E7F5FA; display: flex; align-items: center; justify-content: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#07789A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 20h20"/><path d="M4 20 11 13h6a1 1 0 0 1 1 1v6"/></svg></span><span style="font-size: 17px; font-weight: 600;">Nakládací rampa</span></div>
+<span style="font-size: 14px; line-height: 1.6; font-weight: 500; color: #54707E;">Rampa u hlavní haly, ostatní jednotky mají nájezd v úrovni terénu.</span>
+</div>
+<div class="card-hov" style="padding: 24px; border-radius: 16px; background: #F5F9FB; border: 1px solid #E3EBEF; display: flex; flex-direction: column; gap: 12px;">
+<div style="display: flex; align-items: center; gap: 12px;"><span aria-hidden="true" style="width: 40px; height: 40px; flex-shrink: 0; border-radius: 12px; background: #E7F5FA; display: flex; align-items: center; justify-content: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#07789A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span style="font-size: 17px; font-weight: 600;">Přístup 24/7</span></div>
+<span style="font-size: 14px; line-height: 1.6; font-weight: 500; color: #54707E;">Vlastní klíče a čipy. Do areálu se dostanete kdykoli, včetně víkendů a svátků.</span>
+</div>
+<div class="card-hov" style="padding: 24px; border-radius: 16px; background: #F5F9FB; border: 1px solid #E3EBEF; display: flex; flex-direction: column; gap: 12px;">
+<div style="display: flex; align-items: center; gap: 12px;"><span aria-hidden="true" style="width: 40px; height: 40px; flex-shrink: 0; border-radius: 12px; background: #E7F5FA; display: flex; align-items: center; justify-content: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#07789A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="13" height="10" rx="2"/><path d="M15 11.2 19.4 9a.5.5 0 0 1 .7.5v5a.5.5 0 0 1-.7.5L15 12.8"/><circle cx="7.5" cy="12" r="2"/></svg></span><span style="font-size: 17px; font-weight: 600;">Kamerový systém</span></div>
+<span style="font-size: 14px; line-height: 1.6; font-weight: 500; color: #54707E;">Oplocený areál s kamerami na obou vjezdech a po obvodu dvora.</span>
+</div>
+<div class="card-hov" style="padding: 24px; border-radius: 16px; background: #F5F9FB; border: 1px solid #E3EBEF; display: flex; flex-direction: column; gap: 12px;">
+<div style="display: flex; align-items: center; gap: 12px;"><span aria-hidden="true" style="width: 40px; height: 40px; flex-shrink: 0; border-radius: 12px; background: #E7F5FA; display: flex; align-items: center; justify-content: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#07789A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 3 5.4 13.4a.5.5 0 0 0 .4.8H11l-1 7 7.6-10.4a.5.5 0 0 0-.4-.8H12z"/></svg></span><span style="font-size: 17px; font-weight: 600;">Elektro 3× 400 V</span></div>
+<span style="font-size: 14px; line-height: 1.6; font-weight: 500; color: #54707E;">Samostatné jističe a podružné měření pro každou jednotku zvlášť.</span>
+</div>
+<div class="card-hov" style="padding: 24px; border-radius: 16px; background: #F5F9FB; border: 1px solid #E3EBEF; display: flex; flex-direction: column; gap: 12px;">
+<div style="display: flex; align-items: center; gap: 12px;"><span aria-hidden="true" style="width: 40px; height: 40px; flex-shrink: 0; border-radius: 12px; background: #E7F5FA; display: flex; align-items: center; justify-content: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#07789A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9.5 17V8h3a2.5 2.5 0 0 1 0 5h-3"/></svg></span><span style="font-size: 17px; font-weight: 600;">Parkování v ceně</span></div>
+<span style="font-size: 14px; line-height: 1.6; font-weight: 500; color: #54707E;">Stání pro osobní vozy u každé jednotky, bez dalšího příplatku k nájmu.</span>
+</div>
+</div>
+</section>
+
+<section id="lokalita" style="height: 400px; flex-shrink: 0; box-sizing: border-box; padding: 72px 80px 0; display: flex; flex-direction: column; gap: 28px;">
+<div style="display: flex; align-items: flex-end; gap: 40px;">
+<div style="display: flex; flex-direction: column; gap: 12px; flex-grow: 1;">
+<div style="font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #07789A;">Lokalita</div>
+<h2 style="margin: 0; font-family: 'Geist', system-ui, sans-serif; font-size: 38px; line-height: 1.1; font-weight: 700; letter-spacing: -0.02em;">Kde areál najdete</h2>
+</div>
+<p style="margin: 0 0 4px; width: 380px; flex-shrink: 0; font-size: 14px; line-height: 1.6; font-weight: 500; color: #54707E;">Napojení na dálnici i MHD. Kamiony najedou bez objížděk, zaměstnanci se dostanou i bez auta.</p>
+</div>
+<div style="display: flex; gap: 24px; align-items: stretch;" class="lokalita-row">
+<div style="position: relative; width: 460px; height: 200px; flex-shrink: 0; border-radius: 20px; overflow: hidden; background: #E3EBEF;"><iframe title="Mapa: Beranových 65, Praha 9" src="https://www.google.com/maps?q=Beranov%C3%BDch%2065%2C%20199%2000%20Praha%209%2C%20%C4%8Cesko&output=embed" width="460" height="200" style="position: absolute; left: 0; top: 0; border: 0; display: block;" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe><div aria-hidden="true" style="position: absolute; left: 0; right: 0; top: 0; height: 96px; background: linear-gradient(180deg, rgba(6, 30, 38, 0.82), rgba(6, 30, 38, 0));"></div><div aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 84px; background: linear-gradient(0deg, rgba(6, 30, 38, 0.85), rgba(6, 30, 38, 0));"></div><div style="position: absolute; left: 24px; top: 24px; display: flex; flex-direction: column; gap: 4px; pointer-events: none;"><span style="font-size: 11px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: #FFFFFF; text-shadow: 0 1px 4px rgba(6, 30, 38, 0.5);">Adresa areálu</span><span style="font-size: 16px; font-weight: 600; color: #FFFFFF; text-shadow: 0 1px 4px rgba(6, 30, 38, 0.5);">Beranových 65</span><span style="font-size: 14px; font-weight: 500; color: #FFFFFF; text-shadow: 0 1px 4px rgba(6, 30, 38, 0.5);">199 00 Praha 9 – Letňany</span></div><a class="btn-acc" href="https://www.google.com/maps/search/?api=1&query=Beranov%C3%BDch%2065%2C%20199%2000%20Praha%209%2C%20%C4%8Cesko" target="_blank" rel="noopener" style="position: absolute; left: 24px; bottom: 24px; display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 12px; background: {{accent}}; color: #062B36; font-size: 13px; font-weight: 700; text-decoration: none;" data-b="72"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#062B36" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19.5 10.5c0 5.5-7.5 11-7.5 11s-7.5-5.5-7.5-11a7.5 7.5 0 0 1 15 0z"/><circle cx="12" cy="10.5" r="2.6"/></svg>Otevřít v mapách</a></div>
+<div style="flex-grow: 1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 16px;">
+<div class="card-hov" style="box-sizing: border-box; padding: 24px; border-radius: 16px; background: #FFFFFF; border: 1px solid #E3EBEF; display: flex; align-items: center; gap: 16px;"><span aria-hidden="true" style="width: 44px; height: 44px; flex-shrink: 0; border-radius: 12px; background: #E7F5FA; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#07789A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 21 8 3"/><path d="M19.5 21 16 3"/><path d="M12 5.5v3"/><path d="M12 12v3"/><path d="M12 18.5v2"/></svg></span><div style="display: flex; flex-direction: column; gap: 4px; min-width: 0;"><span style="font-family: 'Geist', system-ui, sans-serif; font-size: 22px; line-height: 1.05; font-weight: 700; letter-spacing: -0.02em; white-space: nowrap;">5 min</span><span style="font-size: 13px; font-weight: 600; color: #54707E; white-space: nowrap;">na dálnici</span></div></div>
+<div class="card-hov" style="box-sizing: border-box; padding: 24px; border-radius: 16px; background: #FFFFFF; border: 1px solid #E3EBEF; display: flex; align-items: center; gap: 16px;"><span aria-hidden="true" style="width: 44px; height: 44px; flex-shrink: 0; border-radius: 12px; background: #E7F5FA; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#07789A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="12" rx="2"/><path d="M4 9.5h16"/><circle cx="8" cy="18" r="1.6"/><circle cx="16" cy="18" r="1.6"/></svg></span><div style="display: flex; flex-direction: column; gap: 4px; min-width: 0;"><span style="font-family: 'Geist', system-ui, sans-serif; font-size: 22px; line-height: 1.05; font-weight: 700; letter-spacing: -0.02em; white-space: nowrap;">200 m</span><span style="font-size: 13px; font-weight: 600; color: #54707E; white-space: nowrap;">zastávka MHD</span></div></div>
+<div class="card-hov" style="box-sizing: border-box; padding: 24px; border-radius: 16px; background: #FFFFFF; border: 1px solid #E3EBEF; display: flex; align-items: center; gap: 16px;"><span aria-hidden="true" style="width: 44px; height: 44px; flex-shrink: 0; border-radius: 12px; background: #E7F5FA; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#07789A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5v17"/><path d="M8 20.5h8"/><path d="M5 7.5h14"/><path d="M5 7.5 2.5 14.5h5z"/><path d="M19 7.5 16.5 14.5h5z"/></svg></span><div style="display: flex; flex-direction: column; gap: 4px; min-width: 0;"><span style="font-family: 'Geist', system-ui, sans-serif; font-size: 22px; line-height: 1.05; font-weight: 700; letter-spacing: -0.02em; white-space: nowrap;">bez limitu</span><span style="font-size: 13px; font-weight: 600; color: #54707E; white-space: nowrap;">tonáž příjezdu</span></div></div>
+<div class="card-hov" style="box-sizing: border-box; padding: 24px; border-radius: 16px; background: #FFFFFF; border: 1px solid #E3EBEF; display: flex; align-items: center; gap: 16px;"><span aria-hidden="true" style="width: 44px; height: 44px; flex-shrink: 0; border-radius: 12px; background: #E7F5FA; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#07789A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 2.5 4 6.5V20a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 20 20V6.5l-2.5-4z"/><path d="M4 6.5h16"/><path d="M15.5 10.5a3.5 3.5 0 0 1-7 0"/></svg></span><div style="display: flex; flex-direction: column; gap: 4px; min-width: 0;"><span style="font-family: 'Geist', system-ui, sans-serif; font-size: 22px; line-height: 1.05; font-weight: 700; letter-spacing: -0.02em; white-space: nowrap;">pěšky</span><span style="font-size: 13px; font-weight: 600; color: #54707E; white-space: nowrap;">obchody a jídlo</span></div></div>
+</div>
+</div>
+</section>
+
+<section id="proces" style="height: 400px; flex-shrink: 0; box-sizing: border-box; padding: 64px 80px 0; display: flex; flex-direction: column; gap: 28px;">
+<div style="display: flex; align-items: flex-end; gap: 40px;">
+<div style="display: flex; flex-direction: column; gap: 12px; flex-grow: 1;">
+<div style="font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #07789A;">Postup</div>
+<h2 style="margin: 0; font-family: 'Geist', system-ui, sans-serif; font-size: 38px; line-height: 1.1; font-weight: 700; letter-spacing: -0.02em;">Jak pronájem probíhá</h2>
+</div>
+<p style="margin: 0 0 4px; width: 380px; flex-shrink: 0; font-size: 14px; line-height: 1.6; font-weight: 500; color: #54707E;">Tři kroky od výběru v mapě k předání klíčů. Nic z toho nevyžaduje osobní návštěvu kanceláře.</p>
+</div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px;" class="grid-3">
+<div class="card-hov" style="padding: 24px; border-radius: 16px; background: #FFFFFF; border: 1px solid #E3EBEF; display: flex; flex-direction: column; gap: 12px;">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;"><div style="display: flex; align-items: center; gap: 12px;"><span aria-hidden="true" style="width: 40px; height: 40px; flex-shrink: 0; border-radius: 12px; background: #E7F5FA; display: flex; align-items: center; justify-content: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#07789A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg></span><span style="font-family: 'Geist', system-ui, sans-serif; font-size: 22px; font-weight: 700; color: #07789A;">01</span></div><span style="padding: 4px 10px; border-radius: 8px; background: #F5F9FB; font-size: 12px; font-weight: 700; color: #54707E; white-space: nowrap;">Ihned online</span></div>
+<span style="font-size: 17px; font-weight: 600;">Vyberete jednotku</span>
+<span style="font-size: 14px; line-height: 1.6; font-weight: 500; color: #54707E;">Kliknete na plochu v mapě. Podle potřeby doporučíme jinou jednotku nebo jejich kombinaci.</span>
+</div>
+<div class="card-hov" style="padding: 24px; border-radius: 16px; background: #FFFFFF; border: 1px solid #E3EBEF; display: flex; flex-direction: column; gap: 12px;">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;"><div style="display: flex; align-items: center; gap: 12px;"><span aria-hidden="true" style="width: 40px; height: 40px; flex-shrink: 0; border-radius: 12px; background: #E7F5FA; display: flex; align-items: center; justify-content: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#07789A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span style="font-family: 'Geist', system-ui, sans-serif; font-size: 22px; font-weight: 700; color: #07789A;">02</span></div><span style="padding: 4px 10px; border-radius: 8px; background: #F5F9FB; font-size: 12px; font-weight: 700; color: #54707E; white-space: nowrap;">Do 1 pracovního dne</span></div>
+<span style="font-size: 17px; font-weight: 600;">Rezervujete prohlídku</span>
+<span style="font-size: 14px; line-height: 1.6; font-weight: 500; color: #54707E;">Vyberete si volný slot v kalendáři. Termín potvrdíme e-mailem do jednoho pracovního dne.</span>
+</div>
+<div class="card-hov" style="padding: 24px; border-radius: 16px; background: #FFFFFF; border: 1px solid #E3EBEF; display: flex; flex-direction: column; gap: 12px;">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;"><div style="display: flex; align-items: center; gap: 12px;"><span aria-hidden="true" style="width: 40px; height: 40px; flex-shrink: 0; border-radius: 12px; background: #E7F5FA; display: flex; align-items: center; justify-content: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#07789A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6"/><path d="M9 17h3.5"/></svg></span><span style="font-family: 'Geist', system-ui, sans-serif; font-size: 22px; font-weight: 700; color: #07789A;">03</span></div><span style="padding: 4px 10px; border-radius: 8px; background: #F5F9FB; font-size: 12px; font-weight: 700; color: #54707E; white-space: nowrap;">Klíče při podpisu</span></div>
+<span style="font-size: 17px; font-weight: 600;">Smlouva a předání</span>
+<span style="font-size: 14px; line-height: 1.6; font-weight: 500; color: #54707E;">Podepíšeme nájemní smlouvu a klíče předáváme ihned, bez čekání na úpravy prostoru.</span>
+</div>
+</div>
+</section>
+
+<section id="cta-band" style="height: 240px; flex-shrink: 0; box-sizing: border-box; padding: 0 80px; display: flex; align-items: center; gap: 48px; background: #0F2A33;" class="cta-row-section">
+<div style="flex-grow: 1; display: flex; flex-direction: column; gap: 10px;">
+<div style="font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: {{accent}};" data-b="73">Volné termíny tento týden</div>
+<h2 style="margin: 0; font-family: 'Geist', system-ui, sans-serif; font-size: 34px; line-height: 1.1; font-weight: 700; letter-spacing: -0.02em; color: #FFFFFF;">Prohlídku zvládneme do dvou pracovních dnů</h2>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; font-weight: 500; color: #9FBECA;">Rezervace je nezávazná. Přijedete, projdete si jednotku a rozhodnete se až potom.</p>
+</div>
+<div style="display: flex; align-items: center; gap: 12px; flex-shrink: 0;">
+<a class="btn-ghost-dark" href="tel:+420725111222" style="box-sizing: border-box; display: flex; align-items: center; gap: 8px; padding: 12px 16px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.22); color: #FFFFFF; font-size: 14px; font-weight: 600; text-decoration: none; white-space: nowrap;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18.5h2"/></svg>+420 725 111 222</a>
+<a class="btn-acc" href="#poptavka" style="padding: 14px 24px; border-radius: 12px; background: {{accent}}; color: #062B36; font-size: 15px; font-weight: 700; text-decoration: none; white-space: nowrap;" data-b="74">Rezervovat prohlídku</a>
+</div>
+</section>
+
+<section id="faq" style="height: 700px; flex-shrink: 0; box-sizing: border-box; padding: 64px 80px 0; display: flex; flex-direction: column; gap: 20px; background: #FFFFFF;">
+<div style="display: flex; align-items: flex-end; gap: 40px;">
+<div style="display: flex; flex-direction: column; gap: 12px; flex-grow: 1;">
+<div style="font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #07789A;">Časté dotazy</div>
+<h2 style="margin: 0; font-family: 'Geist', system-ui, sans-serif; font-size: 38px; line-height: 1.1; font-weight: 700; letter-spacing: -0.02em;">Na co se ptáte nejčastěji</h2>
+</div>
+<p style="margin: 0 0 4px; width: 380px; flex-shrink: 0; font-size: 14px; line-height: 1.6; font-weight: 500; color: #54707E;">Pokud tu odpověď nenajdete, zavolejte nebo napište, ozveme se do jednoho pracovního dne.</p>
+</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 48px;" class="faq-grid">
+<div style="display: flex; gap: 14px; align-items: flex-start; padding: 20px 0; border-top: 1px solid #E3EBEF;"><span aria-hidden="true" style="flex-shrink: 0; width: 24px; height: 24px; border-radius: 8px; background: #E7F5FA; display: flex; align-items: center; justify-content: center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#07789A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9.5 17.5 19.5 7.5"/></svg></span><div style="display: flex; flex-direction: column; gap: 6px;"><span style="font-size: 16px; font-weight: 600;">Jaká je minimální doba pronájmu?</span><span style="font-size: 14px; line-height: 1.6; font-weight: 500; color: #54707E;">Standardně 12 měsíců. U venkovních ploch se domluvíme i na kratší dobu.</span></div></div>
+<div style="display: flex; gap: 14px; align-items: flex-start; padding: 20px 0; border-top: 1px solid #E3EBEF;"><span aria-hidden="true" style="flex-shrink: 0; width: 24px; height: 24px; border-radius: 8px; background: #E7F5FA; display: flex; align-items: center; justify-content: center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#07789A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9.5 17.5 19.5 7.5"/></svg></span><div style="display: flex; flex-direction: column; gap: 6px;"><span style="font-size: 16px; font-weight: 600;">Je možné jednotky spojit?</span><span style="font-size: 14px; line-height: 1.6; font-weight: 500; color: #54707E;">Ano. Hala A a sklad spolu sousedí a lze je pronajmout jako jeden celek.</span></div></div>
+<div style="display: flex; gap: 14px; align-items: flex-start; padding: 20px 0; border-top: 1px solid #E3EBEF;"><span aria-hidden="true" style="flex-shrink: 0; width: 24px; height: 24px; border-radius: 8px; background: #E7F5FA; display: flex; align-items: center; justify-content: center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#07789A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9.5 17.5 19.5 7.5"/></svg></span><div style="display: flex; flex-direction: column; gap: 6px;"><span style="font-size: 16px; font-weight: 600;">Co se platí nad rámec nájmu?</span><span style="font-size: 14px; line-height: 1.6; font-weight: 500; color: #54707E;">Energie podle podružného měření a paušál za úklid a údržbu společných ploch.</span></div></div>
+<div style="display: flex; gap: 14px; align-items: flex-start; padding: 20px 0; border-top: 1px solid #E3EBEF;"><span aria-hidden="true" style="flex-shrink: 0; width: 24px; height: 24px; border-radius: 8px; background: #E7F5FA; display: flex; align-items: center; justify-content: center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#07789A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9.5 17.5 19.5 7.5"/></svg></span><div style="display: flex; flex-direction: column; gap: 6px;"><span style="font-size: 16px; font-weight: 600;">Můžu si prostor upravit?</span><span style="font-size: 14px; line-height: 1.6; font-weight: 500; color: #54707E;">Po dohodě ano. Stavební úpravy řešíme individuálně podle délky nájmu.</span></div></div>
+<div style="display: flex; gap: 14px; align-items: flex-start; padding: 20px 0; border-top: 1px solid #E3EBEF;"><span aria-hidden="true" style="flex-shrink: 0; width: 24px; height: 24px; border-radius: 8px; background: #E7F5FA; display: flex; align-items: center; justify-content: center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#07789A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9.5 17.5 19.5 7.5"/></svg></span><div style="display: flex; flex-direction: column; gap: 6px;"><span style="font-size: 16px; font-weight: 600;">Jak rychle se mohu nastěhovat?</span><span style="font-size: 14px; line-height: 1.6; font-weight: 500; color: #54707E;">Po podpisu smlouvy ihned. Jednotky jsou vyklizené a připravené k převzetí.</span></div></div>
+<div style="display: flex; gap: 14px; align-items: flex-start; padding: 20px 0; border-top: 1px solid #E3EBEF;"><span aria-hidden="true" style="flex-shrink: 0; width: 24px; height: 24px; border-radius: 8px; background: #E7F5FA; display: flex; align-items: center; justify-content: center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#07789A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9.5 17.5 19.5 7.5"/></svg></span><div style="display: flex; flex-direction: column; gap: 6px;"><span style="font-size: 16px; font-weight: 600;">Lze pronajmout jen část haly?</span><span style="font-size: 14px; line-height: 1.6; font-weight: 500; color: #54707E;">Jednotky pronajímáme vcelku. Menší potřebu pokryje sklad nebo kancelář.</span></div></div>
+<div style="display: flex; gap: 14px; align-items: flex-start; padding: 20px 0; border-top: 1px solid #E3EBEF;"><span aria-hidden="true" style="flex-shrink: 0; width: 24px; height: 24px; border-radius: 8px; background: #E7F5FA; display: flex; align-items: center; justify-content: center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#07789A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9.5 17.5 19.5 7.5"/></svg></span><div style="display: flex; flex-direction: column; gap: 6px;"><span style="font-size: 16px; font-weight: 600;">Platí se kauce?</span><span style="font-size: 14px; line-height: 1.6; font-weight: 500; color: #54707E;">Ano, jeden měsíční nájem jako jistota. Vrací se po skončení nájmu a předání prostoru bez závad.</span></div></div><div style="display: flex; gap: 14px; align-items: flex-start; padding: 20px 0; border-top: 1px solid #E3EBEF;"><span aria-hidden="true" style="flex-shrink: 0; width: 24px; height: 24px; border-radius: 8px; background: #E7F5FA; display: flex; align-items: center; justify-content: center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#07789A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9.5 17.5 19.5 7.5"/></svg></span><div style="display: flex; flex-direction: column; gap: 6px;"><span style="font-size: 16px; font-weight: 600;">Jsou ceny s DPH?</span><span style="font-size: 14px; line-height: 1.6; font-weight: 500; color: #54707E;">Uvedené ceny jsou bez DPH a bez energií. Energie se účtují podle podružného měření.</span></div></div><div style="display: flex; gap: 14px; align-items: flex-start; padding: 20px 0; border-top: 1px solid #E3EBEF;"><span aria-hidden="true" style="flex-shrink: 0; width: 24px; height: 24px; border-radius: 8px; background: #E7F5FA; display: flex; align-items: center; justify-content: center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#07789A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9.5 17.5 19.5 7.5"/></svg></span><div style="display: flex; flex-direction: column; gap: 6px;"><span style="font-size: 16px; font-weight: 600;">Je v prostorách topení a internet?</span><span style="font-size: 14px; line-height: 1.6; font-weight: 500; color: #54707E;">Sklad a venkovní plocha jsou netopené, kancelář a přístavba ano. Optika je zavedená do rozvaděče areálu.</span></div></div><div style="display: flex; gap: 14px; align-items: flex-start; padding: 20px 0; border-top: 1px solid #E3EBEF;"><span aria-hidden="true" style="flex-shrink: 0; width: 24px; height: 24px; border-radius: 8px; background: #E7F5FA; display: flex; align-items: center; justify-content: center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#07789A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5 9.5 17.5 19.5 7.5"/></svg></span><div style="display: flex; flex-direction: column; gap: 6px;"><span style="font-size: 16px; font-weight: 600;">Jak probíhá platba nájmu?</span><span style="font-size: 14px; line-height: 1.6; font-weight: 500; color: #54707E;">Měsíčně předem na základě faktury, splatnost 14 dní.</span></div></div>
+</div>
+</section>
+
+<footer style="height: 180px; flex-shrink: 0; box-sizing: border-box; padding: 0 80px; display: flex; align-items: center; gap: 64px; background: #FFFFFF; border-top: 1px solid #E3EBEF;" class="footer-row-section">
+<div style="display: flex; flex-direction: column; gap: 8px; flex-grow: 1;">
+<div style="display: flex; align-items: center; gap: 12px;">
+<span aria-hidden="true" style="width: 34px; height: 34px; flex-shrink: 0; border-radius: 10px; background: {{accent}}; display: flex; align-items: center; justify-content: center;" data-b="75"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#062B36" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21V10.5l9-4.5 9 4.5V21"/><path d="M2 21h20"/><path d="M9 21v-6.5h6V21"/><path d="M9 17.5h6"/></svg></span><span style="display: flex; flex-direction: column; gap: 1px;"><span style="font-family: 'Geist', system-ui, sans-serif; font-size: 18px; line-height: 1.1; font-weight: 700; letter-spacing: -0.01em;">Areál</span><span style="font-size: 10px; line-height: 1.1; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; color: #54707E;">Sklady a haly</span></span>
+</div>
+<span style="font-size: 13px; font-weight: 500; color: #54707E;">Ukázková data včetně obsazenosti termínů. Ceny jsou uvedené bez DPH a bez energií.</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px; flex-shrink: 0;">
+<span style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: #54707E; white-space: nowrap;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#07789A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19.5 10.5c0 5.5-7.5 11-7.5 11s-7.5-5.5-7.5-11a7.5 7.5 0 0 1 15 0z"/><circle cx="12" cy="10.5" r="2.6"/></svg>Adresa</span>
+<span style="font-size: 15px; font-weight: 500; white-space: nowrap;">Beranových 65, 199 00 Praha 9</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px; flex-shrink: 0;">
+<span style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: #54707E; white-space: nowrap;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#07789A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18.5h2"/></svg>Telefon</span>
+<span style="font-size: 15px; font-weight: 500; white-space: nowrap;">+420 725 111 222</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px; flex-shrink: 0;">
+<span style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: #54707E; white-space: nowrap;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#07789A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>E-mail</span>
+<span style="font-size: 15px; font-weight: 500; white-space: nowrap;">pronajem@areal-letnany.cz</span>
+</div>
+</footer>
+
+</div>
+<a href="#poptavka" class="sticky-cta">Rezervovat prohlídku · od 6 800 Kč</a>
+
+<script src="script.js"></script>
+</body>
+</html>
