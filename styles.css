@@ -56,6 +56,22 @@ input:focus { outline: none; border-color: #07789A; }
 html { -webkit-text-size-adjust: 100%; }
 body { overflow-x: hidden; }
 
+/* Pasy s vlastni barvou pozadi (hlavicka, sekce s bilym/tmavym pozadim, paticka)
+   jsou omezene na max-width: 1280px stejne jako zbytek obsahu - na sirsich
+   obrazovkach by tak jejich barva ostre konci uprostred stranky misto aby
+   sahala az k okraji okna. box-shadow s 100vmax barvu "roztahne" bez zmeny
+   sirky/paddingu boxu (a tedy i zarovnani jeho obsahu); body { overflow-x:
+   hidden } prebytek orizne. */
+#page > header,
+#page > #vybaveni,
+#page > #faq,
+#page > footer {
+  box-shadow: 0 0 0 100vmax #FFFFFF;
+}
+#page > #cta-band {
+  box-shadow: 0 0 0 100vmax #0F2A33;
+}
+
 /* Kontejnery dynamickych seznamu nesmi rusit layout (grid/flex) rodice -
    vykreslene polozky se tak stanou primo grid/flex polozkami rodice,
    presne jako puvodni sc-for. Plati na desktopu i mobilu. */
